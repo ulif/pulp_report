@@ -1,4 +1,3 @@
-import datetime
 from gettext import gettext as _
 from pulp.client.extensions.decorator import priority
 from pulp.client.extensions.extensions import PulpCliSection, PulpCliCommand
@@ -41,11 +40,19 @@ class ProfilediffReport(PulpCliCommand):
 
         super(ProfilediffReport, self).__init__(name, description, method)
 
-        self.create_option('--name', 'Name of the user', required=True)
-        self.create_flag('--show-date', 'If specified, the date will be displayed')
-
+        self.create_option('--master-id', 'Master consumer id', required=True)
+        self.create_option('--consumer-id', 'Consumer to compare to', required=False)
+        self.create_option('--group-id', 'Consumer group to compare to', required=False)
 
     def run(self, **kwargs):
-        self.prompt.write('Hello %s' % kwargs['name'])
-        if kwargs['show-date']:
-            self.prompt.write(datetime.datetime.now())
+        consumer_id = kwargs['consumer-id'] or kwargs['group-id']
+        if (kwargs['consumer-id'] is not None) and (kwargs['group-id'] is not None):
+            msg = _('These arguments cannot be used together')
+            self.prompt.render_failure_message(msg)
+            return
+        if consumer_id is None:
+            msg = _('One of consumer-id or group-id must be given.')
+            self.prompt.render_failure_message(msg)
+            return
+
+        self.prompt.write("* master <-> consumer '%s':" % kwargs['consumer-id'])
