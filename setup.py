@@ -9,7 +9,7 @@ setup(
     author_email='uli@gnufix.de',
     entry_points = {
         'pulp.extensions.admin': [
-        'report_admin = pulp_report.extensions.admin.report.pulp_cli:initialize',
+        'report_admin = pulp_report.extensions.admin.pulp_cli:initialize',
         ]
     }
 )
