@@ -51,11 +51,13 @@ class ProfilediffReport(PulpCliCommand):
             msg = _('These arguments cannot be used together')
             self.prompt.render_failure_message(msg)
             return
-        master = self.context.server.consumer.consumer(id=kwargs['master-id'])
+        # this chokes if `master-id` is not a valid consumer.
+        self.context.server.consumer.consumer(id=kwargs['master-id'])
         consumer_ids = []
         if kwargs['consumer-id'] is not None:
             self.prompt.write("* master <-> consumer '%s':" % kwargs['consumer-id'])
-            consumer = self.context.server.consumer.consumer(id=kwargs['consumer-id'])
+            # chokes if `consumer_id` is not a valid consumer.
+            self.context.server.consumer.consumer(id=kwargs['consumer-id'])
             consumer_ids.append(kwargs['consumer-id'])  # in this case the only entry
         elif kwargs['group-id'] is not None:
             self.prompt.write("* master <-> consumer group '%s':" % kwargs['group-id'])
