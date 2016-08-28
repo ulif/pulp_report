@@ -2,7 +2,6 @@
 from gettext import gettext as _
 from pulp.client.extensions.decorator import priority
 from pulp.client.extensions.extensions import PulpCliSection, PulpCliCommand
-from pulp.server.managers.consumer.group.cud import validate_existing_consumer_group
 
 
 PROFILEDIFF_DESC = _("Show profile differences.")
