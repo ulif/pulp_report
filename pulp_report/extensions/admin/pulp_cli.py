@@ -7,6 +7,7 @@ from pulp.client.extensions.extensions import PulpCliSection, PulpCliCommand
 PROFILEDIFF_DESC = _("Show profile differences.")
 SECT_DESC = _('create reports')
 
+
 @priority()
 def initialize(context):
     """
@@ -32,7 +33,8 @@ class ReportSection(PulpCliSection):
 
 class ProfilediffReport(PulpCliCommand):
 
-    def __init__(self, context, name='profilediff', description=PROFILEDIFF_DESC, method=None):
+    def __init__(self, context, name='profilediff',
+                 description=PROFILEDIFF_DESC, method=None):
         self.context = context
         self.prompt = context.prompt
 
@@ -42,12 +44,15 @@ class ProfilediffReport(PulpCliCommand):
         super(ProfilediffReport, self).__init__(name, description, method)
 
         self.create_option('--master-id', 'Master consumer id', required=True)
-        self.create_option('--consumer-id', 'Consumer to compare to', required=False)
-        self.create_option('--group-id', 'Consumer group to compare to', required=False)
+        self.create_option(
+            '--consumer-id', 'Consumer to compare to', required=False)
+        self.create_option(
+            '--group-id', 'Consumer group to compare to', required=False)
 
     def run(self, **kwargs):
         consumer_id = kwargs['consumer-id'] or kwargs['group-id']
-        if (kwargs['consumer-id'] is not None) and (kwargs['group-id'] is not None):
+        if (kwargs['consumer-id'] is not None) and (
+                kwargs['group-id'] is not None):
             msg = _('These arguments cannot be used together')
             self.prompt.render_failure_message(msg)
             return
@@ -55,12 +60,14 @@ class ProfilediffReport(PulpCliCommand):
         self.context.server.consumer.consumer(id=kwargs['master-id'])
         consumer_ids = []
         if kwargs['consumer-id'] is not None:
-            self.prompt.write("* master <-> consumer '%s':" % kwargs['consumer-id'])
+            self.prompt.write(
+                "* master <-> consumer '%s':" % kwargs['consumer-id'])
             # chokes if `consumer_id` is not a valid consumer.
             self.context.server.consumer.consumer(id=kwargs['consumer-id'])
-            consumer_ids.append(kwargs['consumer-id'])  # in this case the only entry
+            consumer_ids.append(kwargs['consumer-id'])
         elif kwargs['group-id'] is not None:
-            self.prompt.write("* master <-> consumer group '%s':" % kwargs['group-id'])
+            self.prompt.write(
+                "* master <-> consumer group '%s':" % kwargs['group-id'])
             group = self._get_group(kwargs['group-id'])
             if group is None:
                 msg = _('Consumer Group not found: %s' % kwargs['group-id'])
@@ -104,7 +111,8 @@ class ProfilediffReport(PulpCliCommand):
         :param consumer_id: ID of a consumer
         :type  consumer_id: text
 
-        :param units_found: list of already found units. These will be skipped when found again.
+        :param units_found: list of already found units.
+                            These will be skipped when found again.
         :type  units_found: list of dicts
 
         :return: List of "units" (normally: packages)
@@ -127,7 +135,8 @@ class ProfilediffReport(PulpCliCommand):
         :return: consumer data if found, none else.
         :rtype:  dict or None
         """
-        groups = self.context.server.consumer_group.consumer_groups().response_body
+        groups = self.context.server.consumer_group.consumer_groups(
+            ).response_body
         for group in groups:
             if group.get('id', None) == group_id:
                 return group
