@@ -21,8 +21,8 @@ class ReportSection(PulpCliSection):
 
     def __init__(self, context):
         """
-        @param context:
-        @type  context: pulp.client.extensions.core.ClientContext
+        :param context:
+        :type  context: pulp.client.extensions.core.ClientContext
         """
         PulpCliSection.__init__(self, 'report', SECT_DESC)
         self.context = context
