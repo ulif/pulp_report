@@ -27,7 +27,6 @@ class ReportSection(PulpCliSection):
         PulpCliSection.__init__(self, 'report', SECT_DESC)
         self.context = context
         self.prompt = context.prompt  # for easier access
-
         self.add_command(ProfilediffReport(context))
 
 
