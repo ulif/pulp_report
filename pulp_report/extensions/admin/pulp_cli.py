@@ -116,8 +116,17 @@ class ProfilediffReport(PulpCliCommand):
 
     def _format_unit(self, unit):
         """
+        Create a string representation of a "unit" provided by `pulp`.
+
+        "units" means RPM packages normally in this context. We create a
+        string containing the most important parts of a "unit" dict as
+        provided by `pulp`.
+
         :param unit: A unit dict as contained in profiles
-        :param
+        :param unit: dict containing normally package RPM data.
+
+        :return: A string representation of the given "unit"
+        :rtype:  string
         """
         return "%s-%s-%s %s" % (
             unit['name'], unit.get('version', ''), unit.get('release', ''),
