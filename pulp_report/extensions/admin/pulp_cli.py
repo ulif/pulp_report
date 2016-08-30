@@ -32,8 +32,26 @@ class ReportSection(PulpCliSection):
 
 class ProfilediffReport(PulpCliCommand):
 
-    def __init__(self, context, name='profilediff',
-                 description=PROFILEDIFF_DESC, method=None):
+    def __init__(
+            self, context, name='profilediff', description=PROFILEDIFF_DESC,
+            method=None):
+        """Generate a report giving diffs of profiles.
+
+         Pulp consumers have profiles that essentially determine their set of
+         packages to install or installed.
+
+         :param context: Context this command is run in
+         :type context: pulp.client.extensions.core.ClientContext
+
+         :param name: Name of this command
+         :param type: string
+
+         :param description: Description of this command (appears in help)
+         :param type: string
+
+         :param method: Method to run if called. If None is given, `run` is run.
+         :param type: method
+        """
         self.context = context
         self.prompt = context.prompt
 
