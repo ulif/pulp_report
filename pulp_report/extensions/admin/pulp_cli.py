@@ -49,7 +49,7 @@ class ProfilediffReport(PulpCliCommand):
          :param description: Description of this command (appears in help)
          :param type: string
 
-         :param method: Method to run if called. If None is given, `run` is run.
+         :param method: Method to run if called. If None given, `run` is run.
          :param type: method
         """
         self.context = context
