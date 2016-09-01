@@ -13,6 +13,16 @@ setup(
     packages=find_packages(exclude=['test', 'test.*']),
     author='Uli Fouquet',
     author_email='uli@gnufix.de',
+    classifiers=[
+        "Development Status :: 3 - Alpha",
+        "Environment :: Console",
+        "Intended Audience :: End Users/Desktop",
+        "Topic :: Utilities",
+        "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: Implementation :: CPython",
+    ],
     entry_points={
         'pulp.extensions.admin': [
             'report_admin = pulp_report.extensions.admin.pulp_cli:initialize',
